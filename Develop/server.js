@@ -26,11 +26,17 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 })
 
+//get route for /api/notes to read db.json and return all saved notes
+app.get('/api/notes', (req, res) => {
+    console.info(`${req.method} received to view notes`)
+    readFromFile('./db/db.json')
+    .then((data) => res.json(JSON.parse(data)))
+})
+
 //Get route for *
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 })
-
 
 //listening on port
 app.listen(PORT, () =>
