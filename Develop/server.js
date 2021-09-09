@@ -9,7 +9,7 @@ const { readFromFile,
         writeToFile, } = require ('./helpers/fsUtils')
 const uuId = require('./helpers/uuid')
 const { json } = require('express')
-const PORT = 3001;
+const PORT = process.env.port || 3001;
 
 
 //Middleware to parse JSON
