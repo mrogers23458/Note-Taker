@@ -8,6 +8,7 @@ const { readFromFile,
         readAndAppend,
         writeToFile, } = require ('./helpers/fsUtils')
 const uuId = require('./helpers/uuid')
+const { json } = require('express')
 const PORT = 3001;
 
 
@@ -51,6 +52,25 @@ app.post('/api/notes', (req, res) => {
     } else {
         console.log('no new notes posted')
     }
+})
+
+//delete route for /api/notes to remove a record by specific id
+app.delete('/api/notes/:id', (req, res) => {
+    console.info(req.method)
+    const delNoteID = req.params.id
+    readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+        //the result will be returned as an array with all of the notes except the note with id that was passed in as a param
+        const result = json.filter((note) => note.id !== delNoteID)
+        console.log(result)
+
+        //re-write the result array to db.json
+        writeToFile('./db/db.json', result)
+
+        //response to let client know delete request has been completed
+        res.json(`note with ${delNoteID} has been deleted`)
+    })
 })
 
 //Get route for *
