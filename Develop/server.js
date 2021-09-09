@@ -17,5 +17,12 @@ app.use(express.static('public'))
 
 //Get route for homepage
 app.get('/', (req, res) => {
+    console.info(`${req.method} received`)
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+})
+
+//Get route for *
+app.get('*', (req, res) => {
+    console.info(`${req.method} received`)
     res.sendFile(path.join(__dirname, '/public/index.html'))
 })
