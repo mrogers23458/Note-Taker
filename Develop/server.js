@@ -28,9 +28,29 @@ app.get('/notes', (req, res) => {
 
 //get route for /api/notes to read db.json and return all saved notes
 app.get('/api/notes', (req, res) => {
-    console.info(`${req.method} received to view notes`)
+    console.info(`${req.method} request received to view notes`)
     readFromFile('./db/db.json')
     .then((data) => res.json(JSON.parse(data)))
+})
+
+//post route for /api/notes to add a new note to db.json
+app.post('/api/notes', (req, res) => {
+    console.log(req.body)
+
+    //destructing for items in req.body
+    const { title, text, id } = req.body
+
+    if (title && text) {
+        const newNote = {
+            title,
+            text,
+            id: uuId()
+        };
+        readAndAppend(newNote, './db/db.json')
+        res.json(`new note added successfully`)
+    } else {
+        console.log('no new notes posted')
+    }
 })
 
 //Get route for *
