@@ -1,14 +1,10 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-const notesDB = require('./db/db.json')
-const fs = require ('fs')
-const util = require('util')
 const { readFromFile,
         readAndAppend,
         writeToFile, } = require ('./helpers/fsUtils')
 const uuId = require('./helpers/uuid')
-const { json } = require('express')
 const PORT = process.env.port || 3001;
 
 
@@ -39,7 +35,7 @@ app.post('/api/notes', (req, res) => {
     console.log(req.body)
 
     //destructing for items in req.body
-    const { title, text, id } = req.body
+    const { title, text, } = req.body
 
     if (title && text) {
         const newNote = {
