@@ -5,7 +5,7 @@ const { readFromFile,
         readAndAppend,
         writeToFile, } = require ('./helpers/fsUtils')
 const uuId = require('./helpers/uuid')
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 
 
 //Middleware to parse JSON
